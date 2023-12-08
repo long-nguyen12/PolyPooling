@@ -1,0 +1,40 @@
+# Configuration file for trinag model and hyperparameter settings
+# of crop and weed dataset
+
+#'0,1,2,3'
+gpus_to_use: '0,1,2'
+DPI: 300
+LOG_WANDB: False
+
+# learning rate
+learning_rate: 0.001
+lr_schedule: 'cos'
+epochs: 250 
+warmup_epochs: 3
+# one of 'batch_norm' or 'sync_bn' or 'layer_norm'
+norm_typ: 'batch_norm'
+BN_MOM: 0.9
+SyncBN_MOM: 3e-4
+# Hamburger Parameters
+put_cheese: True
+
+DUAL: False
+SPATIAL: TRUE
+RAND_INIT: True
+
+MD_S: 1
+
+ham_channels: 512
+MD_D: 512
+MD_R: 64
+
+# ham_channels: 768
+# MD_D: 768
+# MD_R: 96
+
+TRAIN_STEPS: 6
+EVAL_STEPS: 6
+
+INV_T: 1
+BETA: 0.1
+Eta: 0.9
