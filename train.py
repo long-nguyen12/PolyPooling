@@ -12,11 +12,12 @@ from torch.autograd import Variable
 from torch.utils.data import DataLoader, Dataset
 from torch.utils.tensorboard import SummaryWriter
 from tqdm import tqdm
+
 from models.datasets.polyp import PolypDB
 from models.models import *
 from models.optimizers import get_optimizer
 from models.schedulers import get_scheduler
-from models.utils.utils import AvgMeter, fix_seeds, setup_cudnn
+from models.utils.utils import AvgMeter, clip_gradient, fix_seeds, setup_cudnn
 from val import evaluate
 
 batch_size = 8
@@ -68,21 +69,28 @@ def main(cfg, save_dir, train_loader, val_loader):
         sched_cfg["WARMUP_RATIO"],
     )
 
-    for epoch in range(epochs):
+    for epoch in range(1, epochs + 1):
         model.train()
         train_loss = 0.0
         pbar = tqdm(
             enumerate(train_loader),
             total=iters_per_epoch,
-            desc=f"Epoch: [{epoch+1}/{epochs}] Iter: [{0}/{iters_per_epoch}] LR: {lr:.8f} Loss: {train_loss:.8f}",
+            desc=f"Epoch: [{epoch}/{epochs}] Iter: [{0}/{iters_per_epoch}] LR: {lr:.8f} Loss: {train_loss:.8f}",
         )
 
         for iter, (img, lbl) in pbar:
+            if epoch <= 1:
+                optimizer.param_groups[0]["lr"] = (
+                    (epoch * iter) / (1.0 * iters_per_epoch) * lr
+                )
+            else:
+                scheduler.step()
+
             for rate in size_rates:
                 optimizer.zero_grad(set_to_none=True)
 
-                img = Variable(img).cuda()
-                lbl = Variable(lbl).cuda()
+                img = img.to(device)
+                lbl = lbl.to(device)
 
                 trainsize = int(352 * rate)
                 if rate != 1:
@@ -110,32 +118,31 @@ def main(cfg, save_dir, train_loader, val_loader):
                 loss = loss_0 + loss_2 + loss_3 + loss_4 + loss_1
 
                 loss.backward()
+                clip_gradient(optimizer, 0.5)
+                optimizer.step()
 
                 if rate == 1:
                     loss_record.update(loss.data, train_cfg["BATCH_SIZE"])
 
-                optimizer.step()
+            torch.cuda.synchronize()
 
-            scheduler.step()
-            lr = scheduler.get_lr()
-            lr = sum(lr) / len(lr)
             train_loss += loss.data
 
             pbar.set_description(
-                f"Epoch: [{epoch+1}/{epochs}] Iter: [{iter+1}/{iters_per_epoch}] LR: {lr:.8f} Loss: {train_loss / (iter+1):.8f}"
+                f"Epoch: [{epoch}/{epochs}] Iter: [{iter+1}/{iters_per_epoch}] LR: {lr:.8f} Loss: {train_loss / (iter+1):.8f}"
             )
 
         train_loss /= iter + 1
         writer.add_scalar("train/loss", train_loss, epoch)
         torch.cuda.empty_cache()
 
-        if (epoch + 1) % train_cfg["EVAL_INTERVAL"] == 0 or (epoch + 1) == epochs:
+        if epoch % train_cfg["EVAL_INTERVAL"] == 0 or epoch == epochs:
             miou = evaluate(model, val_loader, device, "Training")[0]
 
             if miou > best_mIoU:
                 best_mIoU = miou
                 torch.save(model.state_dict(), save_dir / "best.pth")
-            torch.save(model.state_dict(), save_dir / f"checkpoint{epoch+1}.pth")
+            torch.save(model.state_dict(), save_dir / f"checkpoint{epoch}.pth")
 
             print(f"Current mIoU: {miou} Best mIoU: {best_mIoU}")
 
