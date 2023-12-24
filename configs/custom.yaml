@@ -1,5 +1,5 @@
 DEVICE          : cuda              # device used for training and evaluation (cpu, cuda, cuda0, cuda1, ...)
-SAVE_DIR        : 'poly-pooling-base-1'         # output folder name used for saving the model, logs and inference results
+SAVE_DIR        : 'poly-pooling'         # output folder name used for saving the model, logs and inference results
 
 MODEL:                                    
   NAME          : PoolPolyp                                           # name of the model you are using
@@ -13,10 +13,6 @@ TRAIN:
   EVAL_INTERVAL : 20              # evaluation interval during training
   AMP           : false           # use AMP in training
   DDP           : false           # use DDP training
-
-LOSS:
-  NAME          : OhemCrossEntropy          # loss function name (ohemce, ce, dice)
-  CLS_WEIGHTS   : false            # use class weights in loss calculation
 
 OPTIMIZER:
   NAME          : adamw           # optimizer name
