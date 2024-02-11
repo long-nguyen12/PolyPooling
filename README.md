@@ -42,3 +42,19 @@ python val.py
 ### Results
 
 ![Results](images/results.png "Results")
+
+### Citation
+
+Please cite our paper if you find the work useful: 
+
+@article{NGUYEN2024105979,
+title = {PolyPooling: An accurate polyp segmentation from colonoscopy images},
+journal = {Biomedical Signal Processing and Control},
+volume = {92},
+pages = {105979},
+year = {2024},
+issn = {1746-8094},
+doi = {https://doi.org/10.1016/j.bspc.2024.105979},
+url = {https://www.sciencedirect.com/science/article/pii/S1746809424000375},
+author = {Dinh Cong Nguyen and Hoang Long Nguyen}
+}
