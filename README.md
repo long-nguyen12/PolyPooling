@@ -46,7 +46,7 @@ python val.py
 ### Citation
 
 Please cite our paper if you find the work useful: 
-
+```
 @article{NGUYEN2024105979,
 title = {PolyPooling: An accurate polyp segmentation from colonoscopy images},
 journal = {Biomedical Signal Processing and Control},
@@ -58,3 +58,4 @@ doi = {https://doi.org/10.1016/j.bspc.2024.105979},
 url = {https://www.sciencedirect.com/science/article/pii/S1746809424000375},
 author = {Dinh Cong Nguyen and Hoang Long Nguyen}
 }
+```
