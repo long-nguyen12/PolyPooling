@@ -13,8 +13,6 @@ import albumentations as A
 from albumentations.pytorch import ToTensorV2
 from models.datasets.polyp import PolypDB
 
-PALETTE = [[0, 0, 0], [255, 255, 255]]
-
 
 @torch.no_grad()
 def evaluate(model, dataloader, device, folder):

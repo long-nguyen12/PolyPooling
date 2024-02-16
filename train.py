@@ -21,7 +21,6 @@ from models.utils.utils import AvgMeter, clip_gradient, fix_seeds, setup_cudnn
 from val import evaluate
 
 batch_size = 8
-PALETTE = [[0, 0, 0], [255, 255, 255]]
 
 
 def structure_loss(pred, mask):
