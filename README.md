@@ -24,7 +24,7 @@ Downloading necessary data:
 
 Download PoolFormer's pretrained `weights`
 (
-[google drive](https://drive.google.com/drive/folders/1b7bwrInTW4VLEm27YawHOAMSMikga2Ia?usp=sharing)
+[google drive]([https://drive.google.com/drive/folders/1b7bwrInTW4VLEm27YawHOAMSMikga2Ia?usp=sharing](https://drive.google.com/file/d/19uAIlAuIm99NHtjefxMbXkpVx1-R00KN/view?usp=sharing))
 ) on ImageNet-1K, and put them in a folder `checkpoints/`.
 Config hyper-parameters in `configs/custom.yaml` and run `train.py` for training. For example:
 
