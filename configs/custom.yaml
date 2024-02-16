@@ -9,10 +9,8 @@ MODEL:
 TRAIN:
   IMAGE_SIZE    : [352, 352]    # training image size in (h, w)
   BATCH_SIZE    : 8               # batch size used to train
-  EPOCHS        : 40             # number of epochs to train
-  EVAL_INTERVAL : 20              # evaluation interval during training
-  AMP           : false           # use AMP in training
-  DDP           : false           # use DDP training
+  EPOCHS        : 20             # number of epochs to train
+  EVAL_INTERVAL : 10              # evaluation interval during training
 
 OPTIMIZER:
   NAME          : adamw           # optimizer name
@@ -27,5 +25,5 @@ SCHEDULER:
   
 
 EVAL:
-  MODEL_PATH    : 'poly-pooling-base-1/best.pth'     # trained model file path
+  MODEL_PATH    : 'poly-pooling/best.pth'     # trained model file path
   IMAGE_SIZE    : [352, 352]                            # evaluation image size in (h, w)                       
