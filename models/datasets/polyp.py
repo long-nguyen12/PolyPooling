@@ -10,7 +10,7 @@ class PolypDB(Dataset):
         self.transform = transform
 
         img_path = Path(root) / "images"
-        self.files = list(img_path.glob("*.png"))
+        self.files = list(img_path.glob("*"))
 
         if not self.files:
             raise Exception(f"No images found in {img_path}")

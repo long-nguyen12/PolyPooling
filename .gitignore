@@ -236,3 +236,5 @@ crashlytics-build.properties
 fabric.properties
 
 proposal/
+
+.vscode/
