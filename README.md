@@ -20,25 +20,6 @@ Downloading necessary data:
 - Download testing dataset and move it into `./data/TestDataset/`, which can be found in this [download link (Google Drive)](https://drive.google.com/file/d/1o8OfBvYE6K-EpDyvzsmMPndnUMwb540R/view).
 - Download training dataset and move it into `./data/TrainDataset/`, which can be found in this [download link (Google Drive)](https://drive.google.com/file/d/1lODorfB33jbd-im-qrtUgWnZXxB94F55/view).
 
-### Training
-
-Download PoolFormer's pretrained `weights`
-(
-[google drive]([https://drive.google.com/drive/folders/1b7bwrInTW4VLEm27YawHOAMSMikga2Ia?usp=sharing](https://drive.google.com/file/d/19uAIlAuIm99NHtjefxMbXkpVx1-R00KN/view?usp=sharing))
-) on ImageNet-1K, and put them in a folder `checkpoints/`.
-Config hyper-parameters in `configs/custom.yaml` and run `train.py` for training. For example:
-
-```
-python train.py
-```
-
-### Evaluation
-
-For evaluation, specific your backbone version, weight's path and dataset and run `val.py`. For example:
-
-```
-python val.py
-```
 ### Results
 
 ![Results](images/results.png "Results")
